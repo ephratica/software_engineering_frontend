@@ -42,7 +42,7 @@
     background-image: url("../assets/login_bg.svg");
     justify-content: center;
     align-items: center;
-    padding: 5px 5px;
+    padding: 25px 25px;
     box-sizing: border-box;
   }
   .login-box {

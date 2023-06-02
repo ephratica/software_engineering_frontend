@@ -48,20 +48,21 @@
     import type { FormInstance } from 'element-plus'
     import { ElNotification } from "element-plus";
     import { useRouter } from 'vue-router'
-    // import { loginApi } from '../../../api/login/login'
-    // import { useUserStore } from '../../../store/modules/user'
+    import { loginApi } from '../api/login'
+    import { useUserStore } from '../stores/modules/user'
     const router = useRouter()
     const ruleFormRef = ref<FormInstance>()
     const passwordType = ref('password')
     const loading = ref(false)
+    const useStore = useUserStore()
     const rules = reactive({
       password: [{ required: true, message: "请输入用户名", trigger: "blur" }],
       username: [{ required: true, message: "请输入密码", trigger: "blur" }],
     })
     // 表单数据
     const ruleForm = reactive({
-      username: 'admin',
-      password: '123456',
+      username: '',
+      password: '',
     })
     // 显示密码图标
     const showPwd = () => {
@@ -75,46 +76,32 @@
         if (valid) {
             loading.value = true
           // 登录
-            await router.push({
-                path: './StudentHome',
-            })
-            ElNotification({
+            const { data } = await loginApi({ ...ruleForm });
+            if(data.status===200){
+              // 设置token
+              userStore.setToken(data.result.token)
+              userStore.setUserInfo({
+                username: data.result.username,
+                role: data.result.role
+              })
+              await router.push({
+                path: '/TeacherHome',
+              })
+              ElNotification({
                 title: '登录成功',
-                message: "欢迎登录 CET报名考试系统",
+                message: "欢迎登录 学生信息管理系统",
                 type: "success",
                 duration: 3000
-            })
-            // const { data } = await loginApi({ ...ruleForm });
-            // if(data.status===200){
-            //   // 设置token
-            //   userStore.setToken(data.result.token)
-            //   userStore.setUserInfo({
-            //     username: data.result.username,
-            //     realname: data.result.realname,
-            //     email: data.result.email,
-            //     sex: data.result.sex,
-            //     userIcon: data.result.userIcon,
-            //     createTime: data.result.createTime,
-            //     role: data.result.role
-            //   })
-            //   await router.push({
-            //     path: '/index',
-            //   })
-            //   ElNotification({
-            //     title: '登录成功',
-            //     message: "欢迎登录 学生信息管理系统",
-            //     type: "success",
-            //     duration: 3000
-            //   })
-            // }else {
-            //   ElNotification({
-            //     title: '温馨提示',
-            //     message: data.message,
-            //     type: "error",
-            //     duration: 3000
-            //   });
-            //   loading.value = false
-            // }
+              })
+            }else {
+              ElNotification({
+                title: '温馨提示',
+                message: data.message,
+                type: "error",
+                duration: 3000
+              });
+              loading.value = false
+            }
         } else {
           console.log('error submit!')
           loading.value = false
