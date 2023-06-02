@@ -56,8 +56,8 @@
     const loading = ref(false)
     const useStore = useUserStore()
     const rules = reactive({
-      password: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-      username: [{ required: true, message: "请输入密码", trigger: "blur" }],
+      password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+      username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
     })
     // 表单数据
     const ruleForm = reactive({
@@ -76,33 +76,42 @@
         if (valid) {
             loading.value = true
           // 登录
-            const { data } = await loginApi({ ...ruleForm });
-            if(data.status===200){
-              // 设置token
-              userStore.setToken(data.result.token)
-              userStore.setUserInfo({
-                username: data.result.username,
-                role: data.result.role
-              })
-              await router.push({
-                path: '/TeacherHome',
-              })
-              ElNotification({
+            await router.push({
+                path: '/StudentHome',
+            })
+            ElNotification({
                 title: '登录成功',
                 message: "欢迎登录 学生信息管理系统",
                 type: "success",
                 duration: 3000
-              })
-            }else {
-              ElNotification({
-                title: '温馨提示',
-                message: data.message,
-                type: "error",
-                duration: 3000
-              });
-              loading.value = false
-            }
-        } else {
+            })
+            // const { data } = await loginApi({ ...ruleForm });
+            
+            // if(data.status===200){
+            // // 设置token
+            //     userStore.setToken(data.result.token)
+            //     userStore.setUserInfo({
+            //     username: data.result.username,
+            //     role: data.result.role
+            // })
+              
+            // ElNotification({
+            //     title: '登录成功',
+            //     message: "欢迎登录 学生信息管理系统",
+            //     type: "success",
+            //     duration: 3000
+            // })
+            // }else {
+            //     ElNotification({
+            //     title: '温馨提示',
+            //     message: data.message,
+            //     type: "error",
+            //     duration: 3000
+            // });
+            // loading.value = false
+            // }
+        } 
+        else {
           console.log('error submit!')
           loading.value = false
           return false

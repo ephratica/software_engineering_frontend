@@ -5,28 +5,29 @@ import RotatingCardBack from "@/examples/cards/rotatingCards/RotatingCardBack.vu
 </script>
 
 <template>
-  <div class="container">
+  <div class="container mt-lg-5">
     <div class="d-flex row justify-content-start">
-      <div class="col-md-3" v-for="flight in this.flights" :key="flight">
+      <div class="col-md-3" v-for="exam in this.exams" :key="exam">
         <div class="card m-1">
           <RotatingCard>
             <RotatingCardFront
                 image="https://bit.ly/3G5JXJZ"
                 icon="touch_app"
-                title="Feel the <br /> Material Kit"
-                description="All the Bootstrap components that you need in a development have been re-design with the new look."
+                :title="exam.name"
+                :description="exam.desc"
             />
 
             <RotatingCardBack
                 image="https://bit.ly/32ZoTGx"
-                title="Discover More"
-                description="You will save a lot of time going from prototyping to full-functional code because all elements are implemented."
+                :title="exam.name"
+                description="Wishing you great success in your examination, may you achieve outstanding results!"
                 :action="[
-                {
-                  route: '/',
-                  label: 'Start with Headers',
-                },
-              ]"
+                  {
+                    route: '/',
+                    label: exam.finish? '开始考试' : '成绩：100',
+                    color: exam.finish? 'white' : 'danger'
+                  },
+                ]"
             />
           </RotatingCard>
         </div>
@@ -49,15 +50,15 @@ export default {
     }
   },
   methods: {
-    mounted () {
-      axios.get('/api/sign_up', {
-        id: "cjy",
-      }).then(res => {
-        this.exams = res.data
-      }).catch(err => {
-        alert('出错了：' + err.code)
-      })
-    }
+  },
+  mounted () {
+    axios.get('/api/sign_up?id=1', {
+    }).then(res => {
+      this.exams = res.data
+      console.log("fuck")
+    }).catch(err => {
+      alert('出错了：' + err.code)
+    })
   }
 }
 </script>
