@@ -1,52 +1,17 @@
 <script setup>
 import TheWelcome from '../components/TheWelcome.vue'
-import {RouterLink} from "vue-router";
+
 </script>
 
 <template>
   <main>
     <TheWelcome />
-    <nav>
-      <RouterLink to="/StudentHome">Student</RouterLink>
-      <RouterLink to="/TeacherHome">Teacher</RouterLink>
-    </nav>
+    <button type="button" onclick="window.location.href='/StudentHome'" class="btn btn-success m-1">Student</button>
+    <button type="button" onclick="window.location.href='/TeacherHome'" class="btn btn-success m-1">Teacher</button>
+
   </main>
 </template>
 
 <style scoped>
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>

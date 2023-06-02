@@ -1,47 +1,42 @@
 <script setup>
-
+import TransparentBlogCard from "@/examples/cards/blogCards/TransparentBlogCard.vue";
 </script>
 
 <template>
-  <h1>
-    hello
-  </h1>
+  <div class="container mt-lg-5">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-center">
+        <div class="col-12 d-flex row justify-content-center">
+          <div class="col col-lg-6">
+            <TransparentBlogCard
+                image="https://bit.ly/3HH2M6E"
+                title="报名系统"
+                description="If you’ve ever wanted to train a machine learning model and integrate it with IFTTT, you now can with ..."
+                :action="{
+                label: '立即报名>>>',
+                route: '/',
+                color: 'success',
+              }"
+            />
+          </div>
+          <div class="col col-lg-6">
+            <TransparentBlogCard
+                image="https://bit.ly/3HH2M6E"
+                title="考试系统"
+                description="If you’ve ever wanted to train a machine learning model and integrate it with IFTTT, you now can with ..."
+                :action="{
+                label: '进入考试>>>',
+                route: '/',
+                color: 'success',
+              }"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>
