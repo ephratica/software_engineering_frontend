@@ -7,10 +7,12 @@ defineProps({
   title: {
     type: String,
     requierd: true,
+    color: "black",
   },
   description: {
     type: String,
     required: true,
+    color: "black",
   },
   action: {
     type: Object,
@@ -20,7 +22,7 @@ defineProps({
     default: () => ({
       route: "javascript:;",
       label: "Read more",
-      color: "white",
+      color: "black",
     }),
   },
 });
@@ -34,12 +36,12 @@ defineProps({
     ></div>
     <div class="card-body">
       <div class="content-left text-start my-auto py-4">
-        <h2 class="card-title text-white">{{ title }}</h2>
-        <p class="card-description text-white">
+        <h2 class="card-title">{{ title }}</h2>
+        <p class="card-description">
           {{ description }}
         </p>
         <a
-          href="javascript:;"
+          :href="action.route"
           class="text-sm icon-move-right"
           :class="`text-${action.color}`"
           >{{ action.label }}

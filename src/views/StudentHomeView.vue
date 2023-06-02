@@ -14,7 +14,7 @@ import TransparentBlogCard from "@/examples/cards/blogCards/TransparentBlogCard.
                 description="If you’ve ever wanted to train a machine learning model and integrate it with IFTTT, you now can with ..."
                 :action="{
                 label: '立即报名>>>',
-                route: '/',
+                route: '/allExams',
                 color: 'success',
               }"
             />
