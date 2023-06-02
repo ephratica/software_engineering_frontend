@@ -24,7 +24,8 @@ import RotatingCardBack from "@/examples/cards/rotatingCards/RotatingCardBack.vu
                 :action="[
                   {
                     route: '/',
-                    label: '开始考试',
+                    label: exam.finish? '开始考试' : '成绩：100',
+                    color: exam.finish? 'white' : 'danger'
                   },
                 ]"
             />
