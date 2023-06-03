@@ -80,7 +80,7 @@
     }
     const signup = () => {
       router.push({
-        path: '/SignUp',
+        path: '/judge',
       })
       ElNotification({
         title: '正在跳转',
