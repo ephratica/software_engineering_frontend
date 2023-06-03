@@ -11,7 +11,7 @@
         <!--标题和logo start-->
         <div class="login-title">
           <img class="icon" src="../assets/logo2.png">
-          <h2 class="title">CET报名考试系统</h2>
+          <h2 class="title">CET注册系统</h2>
         </div>
         <!--标题和logo end-->
         <!--登录表单组件 start-->
@@ -24,7 +24,7 @@
 </template>
   
   <script setup lang="ts">
-  import LoginForm from './LoginForm.vue'
+  import LoginForm from './SignUpForm.vue'
   </script>
   
   <style scoped>
@@ -86,8 +86,8 @@
     white-space: nowrap;
   }
   .login-title .icon{
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
   }
   
   ::v-deep(.el-input__inner){

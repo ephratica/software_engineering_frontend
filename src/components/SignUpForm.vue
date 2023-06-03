@@ -29,6 +29,24 @@
           </template>
         </el-input>
       </el-form-item>
+
+      <el-form-item label="" prop="password2">
+        <el-input
+            placeholder="请再次输入密码"
+            autoComplete="on"
+            v-model="ruleForm.password2"
+            :type="passwordType"
+        >
+          <template #prefix>
+            <el-icon class="el-input__icon"><GoodsFilled /></el-icon>
+          </template>
+          <template #suffix>
+            <div class="show-pwd" @click="showPwd">
+              <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
+            </div>
+          </template>
+        </el-input>
+      </el-form-item>
     
       <el-form-item style="width: 100%">
         <el-button
@@ -36,20 +54,9 @@
             class="login-btn"
             type="success"
             @click="submitForm(ruleFormRef)"
-        >登录</el-button
-        >
-      </el-form-item>
-
-      <el-form-item style="width: 100%">
-        <el-button
-            :loading="loading"
-            class="signup-btn"
-            type="success"
-            @click="signup"
         >注册</el-button
         >
       </el-form-item>
-    
     </el-form>
     </template>
     
@@ -67,28 +74,20 @@
     const useStore = useUserStore()
     const rules = reactive({
       password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+      password2: [{ required: true, message: "请再次输入密码", trigger: "blur" }],
       username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
     })
     // 表单数据
     const ruleForm = reactive({
       username: '',
       password: '',
+      password2: '',
     })
     // 显示密码图标
     const showPwd = () => {
       passwordType.value = passwordType.value === 'password'?'':'password'
     }
-    const signup = () => {
-      router.push({
-        path: '/SignUp',
-      })
-      ElNotification({
-        title: '正在跳转',
-        message: "成功跳转至 CET注册界面",
-        type: "success",
-        duration: 3000
-      })
-    }
+    
     // const userStore = useUserStore()
     const submitForm = (formEl: FormInstance | undefined) => {
       if (!formEl) return
@@ -96,15 +95,30 @@
         if (valid) {
             loading.value = true
           // 登录
-            await router.push({
-                path: '/TeacherHome',
-            })
-            ElNotification({
-                title: '登录成功',
-                message: "欢迎登录 学生信息管理系统",
+            if(ruleForm.password===ruleForm.password2){
+              await router.push({
+                path: '/TheWelcome',
+              })
+              ElNotification({
+                title: '注册成功',
+                message: "正在跳转至 CET登陆界面",
                 type: "success",
                 duration: 3000
-            })
+              })
+            }
+            else{
+              await router.push({
+                path: '/SignUp',
+              })
+              ElNotification({
+                title: '注册失败',
+                message: "两次密码输入不一致",
+                type: "error",
+                duration: 3000
+              })
+              loading.value = false
+              return false 
+            }
             // const { data } = await loginApi({ ...ruleForm });
             
             // if(data.status===200){
@@ -142,10 +156,6 @@
     
     <style scoped>
     .login-btn{
-      margin-top: 20px;
-      width: 100%; height: 47px
-    }
-    .signup-btn{
       margin-top: 20px;
       width: 100%; height: 47px
     }
