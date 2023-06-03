@@ -31,9 +31,7 @@ defineProps({
     }"
   >
     <div class="card-body py-7 text-center">
-      <i v-if="icon" class="material-icons text-white text-4xl my-3">{{
-        icon
-      }}</i>
+      <i class="bi bi-hand-index"></i>
       <p
         v-if="label"
         class="text-sm text-white text-uppercase font-weight-normal"

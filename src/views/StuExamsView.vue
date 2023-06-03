@@ -13,13 +13,13 @@ import RotatingCardBack from "@/examples/cards/rotatingCards/RotatingCardBack.vu
             <RotatingCardFront
                 image="https://bit.ly/3G5JXJZ"
                 icon="touch_app"
-                :title="exam.name"
-                :description="exam.desc"
+                :title="exam.examName"
+                :description="exam.examDesc"
             />
 
             <RotatingCardBack
                 image="https://bit.ly/32ZoTGx"
-                :title="exam.name"
+                :title="exam.examName"
                 description="Wishing you great success in your examination, may you achieve outstanding results!"
                 :action="[
                   {
@@ -52,10 +52,10 @@ export default {
   methods: {
   },
   mounted () {
-    axios.get('/api/sign_up?id=1', {
+    axios.get('/api/sign_up/exam?id=1', {
     }).then(res => {
       this.exams = res.data
-      console.log("fuck")
+      // console.log(this.exams)
     }).catch(err => {
       alert('出错了：' + err.code)
     })

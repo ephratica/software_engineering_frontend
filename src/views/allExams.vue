@@ -37,7 +37,7 @@ export default {
     axios.get('/api/exam/all', {
     }).then(res => {
       this.exams = res.data
-      this.action.route = "/"
+      this.action.route = "/pay"
       this.action.label = "报名考试"
       this.action.color = "white"
       // console.log("fuck")
