@@ -23,9 +23,9 @@ import RotatingCardBack from "@/examples/cards/rotatingCards/RotatingCardBack.vu
                 description="Wishing you great success in your examination, may you achieve outstanding results!"
                 :action="[
                   {
-                    route: '/',
-                    label: exam.finish? '开始考试' : '成绩：100',
-                    color: exam.finish? 'white' : 'danger'
+                    route: (exam.finish === '1') ? '#' : '/questions',
+                    label: (exam.finish === '1') ? '成绩：100' : '开始考试',
+                    color: (exam.finish === '1') ? 'danger' : 'white'
                   },
                 ]"
             />
