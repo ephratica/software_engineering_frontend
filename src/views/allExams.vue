@@ -10,7 +10,8 @@ import BackgroundBlogCard from "@/examples/cards/blogCards/BackgroundBlogCard.vu
           <BackgroundBlogCard
               image='/resources/north.jpeg'
               :title="exam.name"
-              :description="exam.desc + 'price: ￥' + exam.price"
+              :description="exam.desc "
+              :price="'price: ￥' + exam.price"
               :action=this.action
           />
         </div>
