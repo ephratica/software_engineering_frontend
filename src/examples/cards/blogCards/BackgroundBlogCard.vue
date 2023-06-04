@@ -42,15 +42,15 @@ defineProps({
     <div class="card-body">
       <div class="content-left text-start my-auto py-4">
         <h2 class="card-title">{{ title }}</h2>
-        <p class="card-description">
+        <h6 class="card-description hStyle">
           {{ description }}
-        </p>
-        <p class="card-description">
+        </h6>
+        <h6 class="card-description hStyle">
           {{ price }}
-        </p>
+        </h6>
         <a
             :href="action.route"
-            class="text-sm icon-move-right"
+            class="text-lg icon-move-right"
             :class="`text-${action.color}`"
         >{{ action.label }}
           <i class="fas fa-arrow-right text-xs ms-1"></i>
@@ -59,3 +59,9 @@ defineProps({
     </div>
   </div>
 </template>
+
+<style scoped>
+.hStyle{
+  color: white;
+}
+</style>

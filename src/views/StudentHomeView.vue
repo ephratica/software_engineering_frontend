@@ -48,7 +48,7 @@ import Header from "../examples/Header.vue";
         <div class="col-12 d-flex row justify-content-center">
           <div class="col col-lg-6">
             <TransparentBlogCard
-                image="https://bit.ly/3HH2M6E"
+                image="../resources/sign.jpg"
                 title="报名系统"
                 description="CET笔试的考试时间为每年6月和12月；CET口试的考试时间为每年5月和11月，报考口试的考生必须先报考当次相应级别的笔试。"
                 :action="{
@@ -60,7 +60,7 @@ import Header from "../examples/Header.vue";
           </div>
           <div class="col col-lg-6">
             <TransparentBlogCard
-                image="https://bit.ly/3HH2M6E"
+                image="../resources/exam.jpg"
                 title="考试系统"
                 description="CET笔试现在支持在线考试，请准备好双机位摄像头、麦克风，进入考试系统答题。或查看已完成的考试成绩。"
                 :action="{

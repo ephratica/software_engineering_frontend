@@ -45,7 +45,7 @@ import Header from "../examples/Header.vue";
     <div class="container mt-lg-5">
       <h3>选择您要报名的考试</h3>
       <div class="d-flex row justify-content-start mt-5 mb-5">
-        <div class="col-md-3" v-for="exam in this.exams" :key="exam">
+        <div class="col-md-4" v-for="exam in this.exams" :key="exam">
           <div class="card m-1">
             <BackgroundBlogCard
                 image='/resources/north.jpeg'
