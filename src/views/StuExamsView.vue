@@ -101,8 +101,8 @@ export default {
       return route
     },
     setQuestionLabel: function (i) {
-      let choiceScore = this.scores[i][this.scores[i].length - 2]
-      let textScore = this.scores[i][this.scores[i].length - 1]
+      let choiceScore = this.scores[i][0]
+      let textScore = this.scores[i][1]
       let label = ''
       if(choiceScore != null && textScore != null)
         label = '成绩: ' + (choiceScore + textScore)
