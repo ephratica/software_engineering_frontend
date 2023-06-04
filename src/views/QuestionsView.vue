@@ -106,7 +106,7 @@ export default {
     this.searchParams = new URLSearchParams(window.location.search)
     this.id = this.searchParams.get("id")
     this.examId = this.searchParams.get("examId")
-    axios.get('/api/exam/content?id=2', {
+    axios.get(('/api/exam/content?id=' + this.examId), {
     }).then(res => {
       this.answer_list = res.data
       console.log(this.id)

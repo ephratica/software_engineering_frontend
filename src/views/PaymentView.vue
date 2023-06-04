@@ -84,7 +84,8 @@ export default {
         examId: this.examId,
       }).then(res => {
         this.sign_up_result = res.data
-        window.location.href = this.sign_up_result ? ('/StudentHome?id=' + this.id) : '#'
+        let target = this.sign_up_result ? ('/StudentHome?id=' + this.id) : '#'
+        window.location.replace(target)
         console.log(this.sign_up_result)
       }).catch(err => {
         // alert('出错了：' + err.code)

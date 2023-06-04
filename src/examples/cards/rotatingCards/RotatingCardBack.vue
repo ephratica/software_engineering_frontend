@@ -35,16 +35,35 @@ defineProps({
         {{ description }}
       </p>
       <div class="buttons-group">
-        <a
-          v-for="({ route, color, label }, index) of action"
-          :key="index"
-          :href="route"
-          target="_blank"
-          class="btn btn-sm mt-3 inline-block ms-1"
-          :class="`${color ? `btn-${color}` : 'btn-white'}`"
-          >{{ label }}</a
-        >
+<!--        <a-->
+<!--          v-for="({ route, color, label }, index) of action"-->
+<!--          :key="index"-->
+<!--          :href="route"-->
+<!--          @click="window.location.replace(route)"-->
+<!--          target="_self"-->
+<!--          class="btn btn-sm mt-3 inline-block ms-1"-->
+<!--          :class="`${color ? `btn-${color}` : 'btn-white'}`"-->
+<!--          >{{ label }}</a>-->
+        <button
+            v-for="({ route, color, label }, index) of action" :key="index"
+            type="button"
+            @click="btnClick(route)"
+            class="btn btn-sm mt-3 inline-block ms-1"
+            :class="`${color ? `btn-${color}` : 'btn-white'}`"
+        >{{ label }}</button>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+  export default {
+    methods: {
+      btnClick: function (route){
+        window.location.replace(route)
+      }
+    }
+  }
+</script>
+
+
