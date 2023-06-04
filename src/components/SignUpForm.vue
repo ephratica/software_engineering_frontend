@@ -66,6 +66,7 @@
     import { ElNotification } from "element-plus";
     import { useRouter } from 'vue-router'
     import { useUserStore } from '../stores/modules/user'
+import axios from 'axios';
     const router = useRouter()
     const ruleFormRef = ref<FormInstance>()
     const passwordType = ref('password')
@@ -95,15 +96,35 @@
             loading.value = true
           // 登录
             if(ruleForm.password===ruleForm.password2){
-              await router.push({
-                path: '/TheWelcome',
-              })
-              ElNotification({
+              axios.post('/api/user/register', {
+              name: ruleForm.username,
+              password: ruleForm.password,
+              type:'student'
+            }).then(res => {
+              console.log(res.data)
+              if(res.data===1){
+                ElNotification({
                 title: '注册成功',
                 message: "正在跳转至 CET登陆界面",
                 type: "success",
                 duration: 3000
+                })
+                router.push({
+                path: '/TheWelcome',
               })
+              }
+              if(res.data===-1){
+                ElNotification({
+                title: '注册失败',
+                message: "用户已存在",
+                type: "error",
+                duration: 3000
+                })
+              }
+            }).catch(err => {
+              // alert('出错了：' + err.code)
+              alert("支付失败！请勿重复报名！")
+            })          
             }
             else{
               await router.push({
@@ -118,31 +139,6 @@
               loading.value = false
               return false 
             }
-            // const { data } = await loginApi({ ...ruleForm });
-            
-            // if(data.status===200){
-            // // 设置token
-            //     userStore.setToken(data.result.token)
-            //     userStore.setUserInfo({
-            //     username: data.result.username,
-            //     role: data.result.role
-            // })
-              
-            // ElNotification({
-            //     title: '登录成功',
-            //     message: "欢迎登录 学生信息管理系统",
-            //     type: "success",
-            //     duration: 3000
-            // })
-            // }else {
-            //     ElNotification({
-            //     title: '温馨提示',
-            //     message: data.message,
-            //     type: "error",
-            //     duration: 3000
-            // });
-            // loading.value = false
-            // }
         } 
         else {
           console.log('error submit!')

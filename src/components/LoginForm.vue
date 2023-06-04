@@ -56,9 +56,9 @@
     <script setup lang="ts">
     import axios from 'axios'
     import { ref, reactive } from 'vue'
+    import { useRoute, useRouter } from "vue-router"
     import { FormInstance, useGetDerivedNamespace } from 'element-plus'
     import { ElNotification } from "element-plus";
-    import { useRouter } from 'vue-router'
     import { useUserStore } from '../stores/modules/user'
     const router = useRouter()
     const ruleFormRef = ref<FormInstance>()
@@ -80,7 +80,7 @@
     }
     const signup = () => {
       router.push({
-        path: '/judge',
+        path: '/SignUp',
       })
       ElNotification({
         title: '正在跳转',
@@ -95,7 +95,7 @@
       formEl.validate(async(valid) => {
         if (valid) {
             await axios.get(
-              '/user/login',{
+              'api/user/login',{
                 params:{
                   name    :ruleForm.username,
                   pwd     :ruleForm.password,
@@ -103,16 +103,19 @@
               }
             )
             .then(res =>{
-              console.log(res.data)
-              if(res.data.id===2){
-                router.push({
-                path: '/StudentHome',
-                })
+              console.log(res.data.id)
+              if(res.data.type==="student"){
                 ElNotification({
                     title: '登录成功',
                     message: "欢迎登录 学生信息管理系统",
                     type: "success",
                     duration: 3000
+                })
+                router.push({
+                  path: '/StudentHome',
+                  query: {
+                    id: res.data.id
+                  }
                 })
               }
               else if(res.data.type==='teacher'){
@@ -157,11 +160,13 @@
     <style scoped>
     .login-btn{
       margin-top: 20px;
-      width: 100%; height: 47px
+      width: 100%; height: 47px;
+      border-radius: 10px;
     }
     .signup-btn{
-      margin-top: 20px;
-      width: 100%; height: 47px
+      margin-top: 10px;
+      width: 100%; height: 47px;
+      border-radius: 10px;
     }
     .show-pwd {
       position: absolute;

@@ -4,27 +4,13 @@
             <div class="card">
                 <div class="title">题目信息</div>
                     <div class="content">
-                        We ran a study in which ， in 0 ne group ， we showed people their
-                        mcome on a monthly basis. ln another group ， we showed peopl e
-                        their income on a weekly basis. And what we found was th at
-                        people whO saw their income on a weekly basis were able tO
-                        budget better throughout the month. NOW, ， it's important tO know
-                        that we didn't change how much money people were recewing,
-                        we 」 ust changed the enuronment in wh ic h they understood their
-                        mcome. And environmental cues like this h ave an impact.
+                        {{ exam}}
                     </div>
                 </div>
                 <div class="card">
                     <div class="title">学生的作答信息</div>
                         <div class="content">
-                            We ran a study in which ， in 0 ne group ， we showed people their
-                            mcome on a monthly basis. ln another group ， we showed peopl e
-                            their income on a weekly basis. And what we found was th at
-                            people whO saw their income on a weekly basis were able tO
-                            budget better throughout the month. NOW, ， it's important tO know
-                            that we didn't change how much money people were recewing,
-                            we 」 ust changed the enuronment in wh ic h they understood their
-                            mcome. And environmental cues like this h ave an impact.
+                            {{ ans}}
                         </div>
                     </div>
                     <div class="card">
@@ -39,7 +25,7 @@
                                     <textarea id="comment" name="comment" rows="18" cols="30"></textarea>
                                 </div>
                                 <div class="button-container">
-                                    <button class="submit">提交</button>
+                                    <button class="submit" @click="clickHandler">提交</button>
                                 </div>
                             </div>
                         </div>
@@ -49,8 +35,35 @@
 </template>
   
   <script>
+import { onMounted } from 'vue';
+import axios from "axios";
   export default {
-    // vue3 逻辑
+    data: function () {
+    return {
+      exam_id:1,
+      exam:"ABC",
+      ans:"CBA",
+      paper: [],
+    }},
+    mounted () {
+      axios.get('/api/sign_up/finished?id=1', {
+      }).then(res => {
+        let exams = res.data
+        console.log(exams)
+        for (let [i, exam] of exams.entries()) {
+          console.log(exam.userId)
+          axios.get(('api/take_exam?uid=' + exam.userId + '&eid=1'), {
+          }).then(res => {
+            this.paper[i] = res.data
+            console.log(this.paper)
+          }).catch(err => {
+            alert('出错了：' + err.code)
+          })
+        }
+      }).catch(err => {
+      alert('出错了：' + err.code)
+      })
+    }
   };
   </script>
   
