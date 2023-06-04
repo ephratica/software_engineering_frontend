@@ -54,11 +54,11 @@
     </template>
     
     <script setup lang="ts">
+    import axios from 'axios'
     import { ref, reactive } from 'vue'
-    import type { FormInstance } from 'element-plus'
+    import { FormInstance, useGetDerivedNamespace } from 'element-plus'
     import { ElNotification } from "element-plus";
     import { useRouter } from 'vue-router'
-    import { loginApi } from '../api/login'
     import { useUserStore } from '../stores/modules/user'
     const router = useRouter()
     const ruleFormRef = ref<FormInstance>()
@@ -94,42 +94,56 @@
       if (!formEl) return
       formEl.validate(async(valid) => {
         if (valid) {
-            loading.value = true
-          // 登录
-            await router.push({
+            await axios.get(
+              '/user/login',{
+                params:{
+                  name    :ruleForm.username,
+                  pwd     :ruleForm.password,
+                }
+              }
+            )
+            .then(res =>{
+              console.log(res.data)
+              if(res.data.id===2){
+                router.push({
+                path: '/StudentHome',
+                })
+                ElNotification({
+                    title: '登录成功',
+                    message: "欢迎登录 学生信息管理系统",
+                    type: "success",
+                    duration: 3000
+                })
+              }
+              else if(res.data.type==='teacher'){
+                router.push({
                 path: '/TeacherHome',
+                })
+                ElNotification({
+                    title: '登录成功',
+                    message: "欢迎登录 教师阅卷系统",
+                    type: "success",
+                    duration: 3000
+                })
+              }
+              else {
+                ElNotification({
+                    title: '登录失败',
+                    message: "账号或密码错误",
+                    type: "error",
+                    duration: 3000
+                })
+              }
             })
-            ElNotification({
-                title: '登录成功',
-                message: "欢迎登录 学生信息管理系统",
-                type: "success",
-                duration: 3000
-            })
-            // const { data } = await loginApi({ ...ruleForm });
-            
-            // if(data.status===200){
-            // // 设置token
-            //     userStore.setToken(data.result.token)
-            //     userStore.setUserInfo({
-            //     username: data.result.username,
-            //     role: data.result.role
-            // })
-              
-            // ElNotification({
-            //     title: '登录成功',
-            //     message: "欢迎登录 学生信息管理系统",
-            //     type: "success",
-            //     duration: 3000
-            // })
-            // }else {
-            //     ElNotification({
-            //     title: '温馨提示',
-            //     message: data.message,
-            //     type: "error",
-            //     duration: 3000
-            // });
-            // loading.value = false
-            // }
+            .catch(error=>(
+              ElNotification({
+                  title: '登录失败',
+                  message: error.code,
+                  type: "error",
+                  duration: 3000
+              })
+            )
+          )
         } 
         else {
           console.log('error submit!')

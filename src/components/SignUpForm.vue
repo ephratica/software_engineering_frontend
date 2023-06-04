@@ -65,7 +65,6 @@
     import type { FormInstance } from 'element-plus'
     import { ElNotification } from "element-plus";
     import { useRouter } from 'vue-router'
-    import { loginApi } from '../api/login'
     import { useUserStore } from '../stores/modules/user'
     const router = useRouter()
     const ruleFormRef = ref<FormInstance>()
