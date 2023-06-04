@@ -32,15 +32,12 @@ defineProps({
     name: String,
     href: String,
     default: () => [
-      { href: "https://www.creative-tim.com/", name: "Company" },
+      { href: "https://cc.nankai.edu.cn/", name: "University" },
       { href: "https://www.creative-tim.com/presentation", name: "About Us" },
       { href: "https://www.creative-tim.com/presentation", name: "Team" },
-      {
-        href: "https://www.creative-tim.com/templates/vuejs",
-        name: "Products",
-      },
-      { href: "https://www.creative-tim.com/blog", name: "Blog" },
-      { href: "https://www.creative-tim.com/license", name: "License" },
+      { href: "https://github.com/ephratica/software_engineering_frontend", name: "frontend",},
+      { href: "https://github.com/thisisddw/software_engineering_backend/tree/master", name: "backend" },
+      { href: "https://github.com/ephratica/software_engineering_frontend/blob/master/LICENSE", name: "License" },
     ],
   },
 });

@@ -2,6 +2,7 @@
 import TransparentBlogCard from "@/examples/cards/blogCards/TransparentBlogCard.vue";
 import NavbarDefault from "@/examples/navbars/NavbarDefault.vue";
 import vueMkHeader from "@/assets/img/vue-mk-header.jpg";
+import CenteredFooter from "@/examples/footers/FooterCentered.vue";
 </script>
 
 <template>
@@ -42,7 +43,7 @@ import vueMkHeader from "@/assets/img/vue-mk-header.jpg";
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
     <div class="container mt-lg-5">
     <div class="row mt-5">
-      <div class="col-12 d-flex justify-content-center">
+      <div class="col-12 d-flex justify-content-center mt-4 mb-4">
         <div class="col-12 d-flex row justify-content-center">
           <div class="col col-lg-6">
             <TransparentBlogCard
@@ -73,6 +74,8 @@ import vueMkHeader from "@/assets/img/vue-mk-header.jpg";
     </div>
   </div>
   </div>
+
+  <CenteredFooter />
 </template>
 
 <style scoped>

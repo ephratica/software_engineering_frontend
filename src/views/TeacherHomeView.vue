@@ -2,6 +2,8 @@
 import CenteredBlogCard from "@/examples/cards/blogCards/CenteredBlogCard.vue";
 import NavbarDefault from "@/examples/navbars/NavbarDefault.vue";
 import vueMkHeader from "@/assets/img/vue-mk-header.jpg";
+import CenteredFooter from "../examples/footers/FooterCentered.vue"
+import Header from "../examples/Header.vue";
 </script>
 
 <template>
@@ -41,7 +43,8 @@ import vueMkHeader from "@/assets/img/vue-mk-header.jpg";
 
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
     <div class="container mt-lg-5">
-    <div class="d-flex row justify-content-start mt-5">
+      <h3>选择您要批改的考试</h3>
+    <div class="d-flex row justify-content-start mt-7 mb-7">
       <div class="col-md-3" v-for="exam in this.exams" :key="exam">
         <div class="card m-1 h-100">
           <CenteredBlogCard
@@ -55,6 +58,8 @@ import vueMkHeader from "@/assets/img/vue-mk-header.jpg";
     </div>
   </div>
   </div>
+
+  <CenteredFooter />
 </template>
 
 

@@ -14,7 +14,7 @@ const props = defineProps({
     color: String,
     label: String,
     default: () => ({
-      route: "https://www.creative-tim.com/product/vue-material-kit",
+      route: "/",
       color: "bg-gradient-success",
       label: "Logout",
       title: "Home",

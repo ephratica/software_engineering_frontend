@@ -4,6 +4,7 @@ import RotatingCardFront from "@/examples/cards/rotatingCards/RotatingCardFront.
 import RotatingCardBack from "@/examples/cards/rotatingCards/RotatingCardBack.vue";
 import NavbarDefault from "@/examples/navbars/NavbarDefault.vue";
 import vueMkHeader from "@/assets/img/vue-mk-header.jpg";
+import CenteredFooter from "@/examples/footers/FooterCentered.vue";
 </script>
 
 <template>
@@ -43,7 +44,8 @@ import vueMkHeader from "@/assets/img/vue-mk-header.jpg";
 
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
     <div class="container mt-lg-5">
-    <div class="d-flex row justify-content-start mt-5">
+      <h3>进入考试或查看成绩</h3>
+      <div class="d-flex row justify-content-start mt-5 mb-5">
       <div class="col-md-3" v-for="exam in this.exams" :key="exam">
         <div class="card m-1 h-100">
           <RotatingCard>
@@ -70,8 +72,10 @@ import vueMkHeader from "@/assets/img/vue-mk-header.jpg";
         </div>
       </div>
     </div>
+    </div>
   </div>
-  </div>
+
+  <CenteredFooter />
 </template>
 
 

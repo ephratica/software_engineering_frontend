@@ -2,6 +2,7 @@
 import BackgroundBlogCard from "@/examples/cards/blogCards/BackgroundBlogCard.vue";
 import NavbarDefault from "@/examples/navbars/NavbarDefault.vue";
 import vueMkHeader from "@/assets/img/vue-mk-header.jpg";
+import CenteredFooter from "@/examples/footers/FooterCentered.vue";
 </script>
 
 <template>
@@ -41,21 +42,24 @@ import vueMkHeader from "@/assets/img/vue-mk-header.jpg";
 
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
     <div class="container mt-lg-5">
-    <div class="d-flex row justify-content-start mt-5">
-      <div class="col-md-3" v-for="exam in this.exams" :key="exam">
-        <div class="card m-1">
-          <BackgroundBlogCard
-              image='/resources/north.jpeg'
-              :title="exam.name"
-              :description="exam.desc "
-              :price="'price: ￥' + exam.price"
-              :action=this.action
-          />
+      <h3>选择您要报名的考试</h3>
+      <div class="d-flex row justify-content-start mt-5 mb-5">
+        <div class="col-md-3" v-for="exam in this.exams" :key="exam">
+          <div class="card m-1">
+            <BackgroundBlogCard
+                image='/resources/north.jpeg'
+                :title="exam.name"
+                :description="exam.desc "
+                :price="'price: ￥' + exam.price"
+                :action=this.action
+            />
+          </div>
         </div>
       </div>
-    </div>
   </div>
   </div>
+
+  <CenteredFooter />
 </template>
 
 
