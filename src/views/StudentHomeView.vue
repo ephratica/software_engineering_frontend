@@ -3,6 +3,7 @@ import TransparentBlogCard from "@/examples/cards/blogCards/TransparentBlogCard.
 import NavbarDefault from "@/examples/navbars/NavbarDefault.vue";
 import vueMkHeader from "@/assets/img/vue-mk-header.jpg";
 import CenteredFooter from "@/examples/footers/FooterCentered.vue";
+import Header from "../examples/Header.vue";
 </script>
 
 <template>

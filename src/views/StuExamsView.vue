@@ -2,6 +2,7 @@
 import RotatingCard from "@/examples/cards/rotatingCards/RotatingCard.vue";
 import RotatingCardFront from "@/examples/cards/rotatingCards/RotatingCardFront.vue";
 import RotatingCardBack from "@/examples/cards/rotatingCards/RotatingCardBack.vue";
+import Header from "../examples/Header.vue";
 import NavbarDefault from "@/examples/navbars/NavbarDefault.vue";
 import vueMkHeader from "@/assets/img/vue-mk-header.jpg";
 import CenteredFooter from "@/examples/footers/FooterCentered.vue";
@@ -46,7 +47,7 @@ import CenteredFooter from "@/examples/footers/FooterCentered.vue";
     <div class="container mt-lg-5">
       <h3>进入考试或查看成绩</h3>
       <div class="d-flex row justify-content-start mt-5 mb-5">
-      <div class="col-md-3" v-for="exam in this.exams" :key="exam">
+      <div class="col-md-3" v-for="(exam, i) in this.exams" :key="exam">
         <div class="card m-1 h-100">
           <RotatingCard>
             <RotatingCardFront
@@ -63,7 +64,7 @@ import CenteredFooter from "@/examples/footers/FooterCentered.vue";
                 :action="[
                   {
                     route: (exam.finish === '1') ? '#' : setQuestionRoute(exam),
-                    label: (exam.finish === '1') ? '成绩：100' : '开始考试',
+                    label: (exam.finish === '1') ? setQuestionLabel(i) : '开始考试',
                     color: (exam.finish === '1') ? 'danger' : 'white'
                   },
                 ]"
@@ -90,6 +91,7 @@ export default {
     return {
       exams: [],
       id: "",
+      scores: [],
     }
   },
   methods: {
@@ -97,6 +99,16 @@ export default {
       let route = ""
       route = '/questions?id=' + this.id + '&examId=' + exam.examId
       return route
+    },
+    setQuestionLabel: function (i) {
+      let choiceScore = this.scores[i][this.scores[i].length - 2]
+      let textScore = this.scores[i][this.scores[i].length - 1]
+      let label = ''
+      if(choiceScore != null && textScore != null)
+        label = '成绩: ' + (choiceScore + textScore)
+      else
+        label = '未批阅'
+      return label
     }
   },
   mounted () {
@@ -104,11 +116,20 @@ export default {
     this.id = this.searchParams.get("id")
     axios.get(('/api/sign_up/exam?id=' + this.id), {
     }).then(res => {
-      this.exams = res.data
-      // console.log(this.exams)
+      let exams = res.data
+      this.scores = Array.apply(null, Array(5)).map(function () { return []; });
+      for (let [i, exam] of exams.entries()) {
+        axios.get(('/api/grade?uid=' + this.id + '&eid=' + exam.examId), {
+        }).then(res => {
+          this.scores[i] = res.data
+        }).catch(err => {
+          alert('出错了：' + err.code)
+        })
+      }
+      this.exams = exams;
     }).catch(err => {
       alert('出错了：' + err.code)
-    })
+    });
   }
 }
 </script>
