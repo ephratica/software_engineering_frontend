@@ -1,10 +1,12 @@
 <script setup>
 import BackgroundBlogCard from "@/examples/cards/blogCards/BackgroundBlogCard.vue";
+import NavbarDefault from "@/examples/navbars/NavbarDefault.vue";
 </script>
 
 <template>
   <div class="container mt-lg-5">
-    <div class="d-flex row justify-content-start">
+    <NavbarDefault :sticky="false" title="Student Home"/>
+    <div class="d-flex row justify-content-start mt-5">
       <div class="col-md-3" v-for="exam in this.exams" :key="exam">
         <div class="card m-1">
           <BackgroundBlogCard

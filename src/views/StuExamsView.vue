@@ -2,13 +2,15 @@
 import RotatingCard from "@/examples/cards/rotatingCards/RotatingCard.vue";
 import RotatingCardFront from "@/examples/cards/rotatingCards/RotatingCardFront.vue";
 import RotatingCardBack from "@/examples/cards/rotatingCards/RotatingCardBack.vue";
+import NavbarDefault from "@/examples/navbars/NavbarDefault.vue";
 </script>
 
 <template>
   <div class="container mt-lg-5">
-    <div class="d-flex row justify-content-start">
+    <NavbarDefault :sticky="false" title="Student Home"/>
+    <div class="d-flex row justify-content-start mt-5">
       <div class="col-md-3" v-for="exam in this.exams" :key="exam">
-        <div class="card m-1">
+        <div class="card m-1 h-100">
           <RotatingCard>
             <RotatingCardFront
                 image="https://bit.ly/3G5JXJZ"

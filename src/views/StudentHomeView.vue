@@ -1,10 +1,12 @@
 <script setup>
 import TransparentBlogCard from "@/examples/cards/blogCards/TransparentBlogCard.vue";
+import NavbarDefault from "@/examples/navbars/NavbarDefault.vue";
 </script>
 
 <template>
   <div class="container mt-lg-5">
-    <div class="row">
+    <NavbarDefault :sticky="false" title="Student Home"/>
+    <div class="row mt-5">
       <div class="col-12 d-flex justify-content-center">
         <div class="col-12 d-flex row justify-content-center">
           <div class="col col-lg-6">
