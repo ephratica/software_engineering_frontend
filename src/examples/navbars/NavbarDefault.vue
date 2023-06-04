@@ -43,6 +43,10 @@ const props = defineProps({
   title: {
     type: String,
     default: 'Home'
+  },
+  home: {
+    type: String,
+    default: 'home'
   }
 });
 
@@ -119,7 +123,7 @@ watch(
             ? 'text-dark font-weight-bolder ms-sm-3'
             : 'text-white font-weight-bolder ms-sm-3'
         ]"
-        :to="{ name: 'home' }"
+        :to="{ name: home }"
         rel="tooltip"
         title="Designed and Coded by Creative Tim"
         data-placement="bottom"
