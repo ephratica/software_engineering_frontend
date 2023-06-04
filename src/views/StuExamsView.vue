@@ -62,7 +62,7 @@ import CenteredFooter from "@/examples/footers/FooterCentered.vue";
                 description="Wishing you great success in your examination, may you achieve outstanding results!"
                 :action="[
                   {
-                    route: (exam.finish === '1') ? '#' : '/questions',
+                    route: (exam.finish === '1') ? '#' : setQuestionRoute(exam),
                     label: (exam.finish === '1') ? '成绩：100' : '开始考试',
                     color: (exam.finish === '1') ? 'danger' : 'white'
                   },
@@ -88,13 +88,21 @@ export default {
   },
   data: function () {
     return {
-      exams: []
+      exams: [],
+      id: "",
     }
   },
   methods: {
+    setQuestionRoute:function (exam){
+      let route = ""
+      route = '/questions?id=' + this.id + '&examId=' + exam.examId
+      return route
+    }
   },
   mounted () {
-    axios.get('/api/sign_up/exam?id=1', {
+    this.searchParams = new URLSearchParams(window.location.search)
+    this.id = this.searchParams.get("id")
+    axios.get(('/api/sign_up/exam?id=' + this.id), {
     }).then(res => {
       this.exams = res.data
       // console.log(this.exams)

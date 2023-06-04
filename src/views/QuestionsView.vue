@@ -64,6 +64,8 @@ export default {
   data: function () {
     return {
       answer_list: [],
+      id: "",
+      examId: ""
     }
   },
   methods: {
@@ -71,17 +73,29 @@ export default {
       let answer = [];
       for (let i in this.answer_list){
         let new_ans = {}
-        new_ans.userId = 1
+        new_ans.userId = this.id
         new_ans.questionId = this.answer_list[i].id
         new_ans.answer = this.answer_list[i].answer
         answer.push(new_ans)
         console.log(this.answer_list[i])
       }
+
       axios.post('/api/take_exam',
         answer
       ).then(res => {
         this.success = res.data
-        window.location.href = this.success ? '/StudentHome' : '#'
+        // window.location.replace(this.success ? ('/StudentHome?id=' + this.id) : '#')
+        // console.log(this.sign_up_result)
+      }).catch(err => {
+        alert('出错了：' + err.code)
+      })
+
+      axios.put('/api/sign_up',{
+        userId: this.id,
+        examId: this.examId
+      }).then(res => {
+        this.success = res.data
+        window.location.replace(this.success ? ('/StudentHome?id=' + this.id) : '#')
         // console.log(this.sign_up_result)
       }).catch(err => {
         alert('出错了：' + err.code)
@@ -89,10 +103,13 @@ export default {
     }
   },
   mounted () {
+    this.searchParams = new URLSearchParams(window.location.search)
+    this.id = this.searchParams.get("id")
+    this.examId = this.searchParams.get("examId")
     axios.get('/api/exam/content?id=2', {
     }).then(res => {
       this.answer_list = res.data
-      // console.log(this.exams)
+      console.log(this.id)
     }).catch(err => {
       alert('出错了：' + err.code)
     })

@@ -52,7 +52,7 @@ import CenteredFooter from "@/examples/footers/FooterCentered.vue";
                 description="If you’ve ever wanted to train a machine learning model and integrate it with IFTTT, you now can with ..."
                 :action="{
                 label: '立即报名>>>',
-                route: '/allExams',
+                route: '/allExams?id=' + this.id,
                 color: 'success',
               }"
             />
@@ -64,7 +64,7 @@ import CenteredFooter from "@/examples/footers/FooterCentered.vue";
                 description="If you’ve ever wanted to train a machine learning model and integrate it with IFTTT, you now can with ..."
                 :action="{
                 label: '进入考试>>>',
-                route: '/stuExams',
+                route: '/stuExams?id=' + this.id,
                 color: 'success',
               }"
             />
@@ -77,6 +77,27 @@ import CenteredFooter from "@/examples/footers/FooterCentered.vue";
 
   <CenteredFooter />
 </template>
+
+<script>
+import axios from "axios";
+
+export default {
+  name: "stu-exams",
+  components: {
+  },
+  data: function () {
+    return {
+      id: ""
+    }
+  },
+  mounted () {
+    this.searchParams = new URLSearchParams(window.location.search)
+    this.id = this.searchParams.get("id")
+  },
+  methods: {
+  }
+}
+</script>
 
 <style scoped>
 

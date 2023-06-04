@@ -72,14 +72,19 @@ export default {
       sign_up_result: 0
     }
   },
+  mounted () {
+    this.searchParams = new URLSearchParams(window.location.search)
+    this.id = this.searchParams.get("id")
+    this.examId = this.searchParams.get("examId")
+  },
   methods: {
     payButtonClick: function () {
       axios.post('/api/sign_up', {
-        userId: 2,
-        examId: 1,
+        userId: this.id,
+        examId: this.examId,
       }).then(res => {
         this.sign_up_result = res.data
-        window.location.href = this.sign_up_result ? '/StudentHome' : '#'
+        window.location.href = this.sign_up_result ? ('/StudentHome?id=' + this.id) : '#'
         console.log(this.sign_up_result)
       }).catch(err => {
         // alert('出错了：' + err.code)

@@ -51,7 +51,7 @@ import CenteredFooter from "@/examples/footers/FooterCentered.vue";
                 :title="exam.name"
                 :description="exam.desc "
                 :price="'price: ￥' + exam.price"
-                :action=this.action
+                :action="setAction(exam)"
             />
           </div>
         </div>
@@ -73,22 +73,30 @@ export default {
   data: function () {
     return {
       exams: [],
-      action: {}
+      action: {},
+      id: ""
     }
   },
   mounted () {
+    this.searchParams = new URLSearchParams(window.location.search)
+    this.id = this.searchParams.get("id")
     axios.get('/api/exam/all', {
     }).then(res => {
       this.exams = res.data
-      this.action.route = "/pay"
-      this.action.label = "报名考试"
-      this.action.color = "white"
       // console.log("fuck")
     }).catch(err => {
       alert('出错了：' + err.code)
     })
   },
   methods: {
+    setAction:function (exam){
+      let action = {}
+      action.label = "报名考试"
+      action.color = "white"
+      action.route = "/pay?id=" + this.id + "&examId=" + exam.id
+      console.log(exam.id)
+      return action
+    }
   }
 }
 </script>
