@@ -8,6 +8,10 @@ defineProps({
     type: String,
     required: true,
   },
+  method: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
     required: true,
@@ -41,7 +45,7 @@ defineProps({
     </div>
     <div class="card-footer">
       <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-sm mb-0 mt-3" :class="action.color">
+        <button type="button" class="btn btn-sm mb-0 mt-3" :class="action.color" @click="method">
           批改试卷
         </button>
       </div>
@@ -51,8 +55,5 @@ defineProps({
 </template>
 
 <style scoped>
-.two-lines {
-  display: inline-block;
-  height: 2em;
-}
+
 </style>
