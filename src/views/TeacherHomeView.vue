@@ -13,6 +13,7 @@ import NavbarDefault from "@/examples/navbars/NavbarDefault.vue";
               image="https://bit.ly/3q0AlKO"
               :title="exam.name"
               :description="exam.desc"
+              :method="toJudge"
           />
         </div>
       </div>
@@ -44,6 +45,9 @@ export default {
     })
   },
   methods: {
+    toJudge:function (){
+      window.location.href='/judge'
+    }
   }
 }
 </script>
