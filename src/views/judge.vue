@@ -10,7 +10,7 @@
                 <div class="card">
                     <div class="title">学生的作答信息</div>
                         <div class="content">
-                            {{ this.paper.answer}}
+                            {{ this.ans}}
                         </div>
                     </div>
                     <div class="card">
@@ -44,9 +44,10 @@ import { ElNotification } from "element-plus";
       score:0,
       exam_id:1,
       paper_id:-1,
-      exam:"Please write a letter to your friend LiHua",
+      exam:"题目",
       ans:"学生作答情况",
       paper: [],
+      answer_list: []
     }},
     mounted () {
       this.searchParams = new URLSearchParams(window.location.search)
@@ -68,6 +69,13 @@ import { ElNotification } from "element-plus";
         console.log(this.paper)
       }).catch(err => {
       alert('出错了：' + err.code)
+      })
+      axios.get(('/api/exam/content?id=1'), {
+      }).then(res => {
+        this.answer_list = res.data
+        console.log("exam:",this.answer_list[1].desc)
+      }).catch(err => {
+        alert('出错了：' + err.code)
       })
     },
     methods:{
@@ -105,6 +113,8 @@ import { ElNotification } from "element-plus";
         }
         this.paper_id=this.paper_id+1
         this.ans=this.paper[this.paper_id][1].answer
+        this.exam = this.answer_list[1].desc
+        console.log("ans:",this.ans)
       }
     }
   };
