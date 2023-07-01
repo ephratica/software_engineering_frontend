@@ -10,7 +10,7 @@
                 <div class="card">
                     <div class="title">学生的作答信息</div>
                         <div class="content">
-                            {{ ans}}
+                            {{ this.paper.answer}}
                         </div>
                     </div>
                     <div class="card">
@@ -18,7 +18,11 @@
                             <div class="content">
                                 <div>
                                     <label for="score">分数：</label>
+<<<<<<< HEAD
                                     <input type="number" id="score" name="score" min="0" max="100"  v-model="this.score"/>
+=======
+                                    <input type="number" id="score" name="score" min="0" max="100" v-model="this.score"/>
+>>>>>>> 14b258dbb26c13b7a6e96b7ba6e640a0ffc58136
                                 </div>
                                 <div>
                                     <label for="comment">评价：</label>
@@ -43,6 +47,7 @@ import { ElNotification } from "element-plus";
     return {
       score:0,
       exam_id:1,
+<<<<<<< HEAD
       paper_id:-1,
       exam:"Please write a letter to your friend LiHua",
       ans:"学生作答情况",
@@ -105,6 +110,34 @@ import { ElNotification } from "element-plus";
         }
         this.paper_id=this.paper_id+1
         this.ans=this.paper[this.paper_id][1].answer
+=======
+      paper_id:0,
+      exam:"",
+      paper: {},
+    }},
+    mounted () {
+      axios.get(('api/take_exam?uid=3' + '&eid=1'), {
+          }).then(res => {
+            this.paper = res.data[res.data.length-1]
+            console.log(this.paper.questionId)
+          }).catch(err => {
+            alert('出错了：' + err.code)
+          })
+    },
+    methods:{
+      clickHandler () {
+        axios.put('/api/grade', {
+          userId: 3,
+          questionId: this.paper.questionId,
+          score:this.score
+        }).then(res => {
+          window.location.href="/TeacherHome"
+        }).catch(err => {
+          // alert('出错了：' + err.code)
+          //alert("意外错误")
+        })
+        // window.location.href="/TeacherHome"
+>>>>>>> 14b258dbb26c13b7a6e96b7ba6e640a0ffc58136
       }
     }
   };
