@@ -18,7 +18,7 @@
                             <div class="content">
                                 <div>
                                     <label for="score">分数：</label>
-                                    <input type="number" id="score" name="score" min="0" max="100"  v-model="this.score"/>
+                                    <input type="number" id="score" name="score" min="0" max={{maxScore}}  v-model="this.score"/>
                                 </div>
                                 <div>
                                     <label for="comment">评价：</label>
@@ -41,6 +41,7 @@ import { ElNotification } from "element-plus";
   export default {
     data: function () {
     return {
+      maxScore:100,
       score:0,
       exam_id:1,
       paper_id:-1,
@@ -73,7 +74,7 @@ import { ElNotification } from "element-plus";
       axios.get(('/api/exam/content?id=1'), {
       }).then(res => {
         this.answer_list = res.data
-        console.log("exam:",this.answer_list[1].desc)
+        console.log("exam:",this.answer_list[1])
       }).catch(err => {
         alert('出错了：' + err.code)
       })
@@ -81,7 +82,17 @@ import { ElNotification } from "element-plus";
     methods:{
       
       clickHandler () {
-        if(this.paper_id!=-1){
+        if(this.score<0||this.score>this.maxScore){
+            ElNotification({
+            title: '提交失败',
+            message: "分数超出规定范围",
+            type: "error",
+            duration: 3000
+            })
+        }
+        else{
+          if(this.paper_id!=-1){
+          
           console.log('userId:',this.paper[this.paper_id][1].userId,'questionId:',this.paper[this.paper_id][1].questionId,'score:',this.score)
           axios.put('/api/grade', {
           userId: this.paper[this.paper_id][1].userId,
@@ -114,7 +125,10 @@ import { ElNotification } from "element-plus";
         this.paper_id=this.paper_id+1
         this.ans=this.paper[this.paper_id][1].answer
         this.exam = this.answer_list[1].desc
+        this.maxScore = this.answer_list[1].maxScore
         console.log("ans:",this.ans)
+        console.log("maxScore:",this.maxScore)
+        }
       }
     }
   };
