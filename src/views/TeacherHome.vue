@@ -1,8 +1,8 @@
 <script setup>
-import CenteredBlogCard from "@/examples/cards/blogCards/CenteredBlogCard.vue";
+import TransparentBlogCard from "@/examples/cards/blogCards/TransparentBlogCard.vue";
 import NavbarDefault from "@/examples/navbars/NavbarDefault.vue";
 import vueMkHeader from "@/assets/img/vue-mk-header.jpg";
-import CenteredFooter from "../examples/footers/FooterCentered.vue"
+import CenteredFooter from "@/examples/footers/FooterCentered.vue";
 import Header from "../examples/Header.vue";
 </script>
 
@@ -10,7 +10,7 @@ import Header from "../examples/Header.vue";
   <div class="container position-sticky z-index-sticky top-0">
     <div class="row">
       <div class="col-12">
-        <NavbarDefault :sticky="true" title="Teacher Home" home="teacher home"/>
+        <NavbarDefault :sticky="true" title="Teacher Home" home="student home"/>
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@ import Header from "../examples/Header.vue";
                 class="text-white pt-3 mt-n5 me-2"
                 :style="{ display: 'inline-block ' }"
             >
-              欢迎使用CET考试判卷系统
+              欢迎使用CET考试教师系统
             </h1>
             <p class="lead text-white px-5 mt-3" :style="{ fontWeight: '500' }">
               May your diligent preparation, unwavering determination, and
@@ -43,16 +43,33 @@ import Header from "../examples/Header.vue";
 
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
     <div class="container mt-lg-5">
-      <h3>选择您要批改的考试</h3>
-    <div class="d-flex row justify-content-start mt-7 mb-7">
-      <div class="col-md-3" v-for="exam in this.exams" :key="exam">
-        <div class="card m-1 h-100">
-          <CenteredBlogCard
-              image="https://bit.ly/3q0AlKO"
-              :title="exam.name"
-              :description="exam.desc"
-              :method="toJudge"
-          />
+    <div class="row mt-5">
+      <div class="col-12 d-flex justify-content-center mt-4 mb-4">
+        <div class="col-12 d-flex row justify-content-center">
+          <div class="col col-lg-6">
+            <TransparentBlogCard
+                image="../resources/sign.jpg"
+                title="判卷系统"
+                description="您将会给出学生在选定考试中大题的分数"
+                :action="{
+                label: '立即判卷>>>',
+                route: '/JudgeHome?id=' + this.id,
+                color: 'success',
+              }"
+            />
+          </div>
+          <div class="col col-lg-6">
+            <TransparentBlogCard
+                image="../resources/exam.jpg"
+                title="出卷系统"
+                description="您将会进入出卷界面，在该界面中需要您给出所有题目的问题以及选择题的正确选项"
+                :action="{
+                label: '进入出卷>>>',
+                route: '/newExam?id=' + this.id,
+                color: 'success',
+              }"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -61,7 +78,6 @@ import Header from "../examples/Header.vue";
 
   <CenteredFooter />
 </template>
-
 
 <script>
 import axios from "axios";
@@ -72,27 +88,17 @@ export default {
   },
   data: function () {
     return {
-      exams: [],
-      action: {}
+      id: ""
     }
   },
   mounted () {
-    axios.get('/api/exam/all', {
-    }).then(res => {
-      this.exams = res.data
-      // console.log("fuck")
-    }).catch(err => {
-      alert('出错了：' + err.code)
-    })
+    this.searchParams = new URLSearchParams(window.location.search)
+    this.id = this.searchParams.get("id")
   },
   methods: {
-    toJudge:function (){
-      window.location.href='/judge'
-    }
   }
 }
 </script>
-
 
 <style scoped>
 

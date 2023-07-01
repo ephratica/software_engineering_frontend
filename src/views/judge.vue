@@ -18,14 +18,14 @@
                             <div class="content">
                                 <div>
                                     <label for="score">分数：</label>
-                                    <input type="number" id="score" name="score" min="0" max="100" />
+                                    <input type="number" id="score" name="score" min="0" max="100"  v-model="this.score"/>
                                 </div>
                                 <div>
                                     <label for="comment">评价：</label>
                                     <textarea id="comment" name="comment" rows="18" cols="30"></textarea>
                                 </div>
                                 <div class="button-container">
-                                    <button class="submit" @click="clickHandler">提交</button>
+                                    <button class="submit" @click="clickHandler">提交&刷新</button>
                                 </div>
                             </div>
                         </div>
@@ -37,32 +37,75 @@
   <script>
 import { onMounted } from 'vue';
 import axios from "axios";
+import { ElNotification } from "element-plus";
   export default {
     data: function () {
     return {
+      score:0,
       exam_id:1,
-      exam:"ABC",
-      ans:"CBA",
+      paper_id:-1,
+      exam:"Please write a letter to your friend LiHua",
+      ans:"学生作答情况",
       paper: [],
     }},
     mounted () {
+      this.searchParams = new URLSearchParams(window.location.search)
+      this.exam_id = this.searchParams.get("id")
       axios.get('/api/sign_up/finished?id=1', {
       }).then(res => {
         let exams = res.data
-        console.log(exams)
+        console.log("exams:",exams)
         for (let [i, exam] of exams.entries()) {
-          console.log(exam.userId)
-          axios.get(('api/take_exam?uid=' + exam.userId + '&eid=1'), {
+          console.log("userId",exam.userId)
+          axios.get(('/api/take_exam?uid=' + exam.userId + '&eid=1'), {
           }).then(res => {
             this.paper[i] = res.data
-            console.log(this.paper)
+            console.log(i,this.paper)
           }).catch(err => {
             alert('出错了：' + err.code)
           })
         }
+        console.log(this.paper)
       }).catch(err => {
       alert('出错了：' + err.code)
       })
+    },
+    methods:{
+      
+      clickHandler () {
+        if(this.paper_id!=-1){
+          console.log('userId:',this.paper[this.paper_id][1].userId,'questionId:',this.paper[this.paper_id][1].questionId,'score:',this.score)
+          axios.put('/api/grade', {
+          userId: this.paper[this.paper_id][1].userId,
+          questionId: this.paper[this.paper_id][1].questionId,
+          score:this.score,
+
+        }).then(res => {
+          
+          if(res.data==='success'){
+            ElNotification({
+            title: '提交成功',
+            message: "即将刷新下一份试卷",
+            type: "success",
+            duration: 3000
+            })
+          }
+          else if(res.data==='failure'){
+            ElNotification({
+            title: '提交失败',
+            message: "请重新提交",
+            type: "error",
+            duration: 3000
+            })
+          }
+        }).catch(err => {
+          // alert('出错了：' + err.code)
+          //alert("意外错误")
+        }) 
+        }
+        this.paper_id=this.paper_id+1
+        this.ans=this.paper[this.paper_id][1].answer
+      }
     }
   };
   </script>

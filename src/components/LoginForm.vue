@@ -120,7 +120,10 @@
               }
               else if(res.data.type==='teacher'){
                 router.push({
-                path: '/TeacherHome',
+                  path: '/TeacherHome',
+                  query: {
+                    id: res.data.id
+                  }
                 })
                 ElNotification({
                     title: '登录成功',

@@ -20,6 +20,11 @@ const router = createRouter({
       component: () => import('../components/SignUp.vue')
     },
     {
+      path: '/newExam',
+      name: 'newExam',
+      component: () => import('../views/newExam.vue')
+    },
+    {
       path: '/TheWelcome',
       name: 'welcome',
       component: () => import('../components/TheWelcome.vue')
@@ -30,9 +35,14 @@ const router = createRouter({
       component: () => import('../views/StudentHomeView.vue')
     },
     {
+      path: '/JudgeHome',
+      name: 'judge home',
+      component: () => import('../views/TeacherHomeView.vue')
+    },
+    {
       path: '/TeacherHome',
       name: 'teacher home',
-      component: () => import('../views/TeacherHomeView.vue')
+      component: () => import('../views/TeacherHome.vue')
     },
     {
       path: '/judge',
