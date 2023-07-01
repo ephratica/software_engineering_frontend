@@ -14,7 +14,7 @@ import MaterialButton from "@/components/MaterialButton.vue";
             ></div>
             <div class="card-body mt-5 mb-5">
               <h2 class="card-title">考试名称: {{this.examToPay.name}}</h2>
-              <h2 class="card-title">应付金额：￥{{this.examToPay.price}}</h2>
+              <h2 class="card-title" data-test="payment-value">应付金额：￥{{this.examToPay.price}}</h2>
               <!--      <h6 class="card-subtitle mb-2 text-muted">请确认您的考试信息</h6>-->
               <p class="card-text">请确认您的考试信息</p>
               <MaterialButton
