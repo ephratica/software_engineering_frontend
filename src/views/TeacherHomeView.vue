@@ -51,7 +51,7 @@ import Header from "../examples/Header.vue";
               image="https://bit.ly/3q0AlKO"
               :title="exam.name"
               :description="exam.desc"
-              :method="toJudge"
+              @click="toJudge(exam.id)"
           />
         </div>
       </div>
@@ -86,8 +86,8 @@ export default {
     })
   },
   methods: {
-    toJudge:function (){
-      window.location.href='/judge'
+    toJudge:function (exam_id){
+      window.location.href='/judge?exam_id=' + exam_id
     }
   }
 }

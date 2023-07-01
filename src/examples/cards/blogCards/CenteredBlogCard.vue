@@ -8,10 +8,6 @@ defineProps({
     type: String,
     required: true,
   },
-  method: {
-    type: String,
-    required: true,
-  },
   description: {
     type: String,
     required: true,
@@ -27,6 +23,19 @@ defineProps({
     }),
   },
 });
+</script>
+<script>
+export default {
+  data: function () {
+    return {
+    }
+  },
+  methods: {
+    onClick: function () {
+      this.$emit('click')
+    }
+  }
+}
 </script>
 <template>
   <div class="card h-100">
@@ -45,7 +54,7 @@ defineProps({
     </div>
     <div class="card-footer">
       <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-sm mb-0 mt-3" :class="action.color" @click="method">
+        <button type="button" class="btn btn-sm mb-0 mt-3" :class="action.color" @click="onClick">
           批改试卷
         </button>
       </div>
