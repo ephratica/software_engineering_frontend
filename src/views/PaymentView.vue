@@ -26,6 +26,45 @@ import MaterialButton from "@/components/MaterialButton.vue";
               </MaterialButton>
             </div>
           </div>
+
+          <!-- Modal -->
+          <div
+              class="modal fade"
+              id="exampleModal"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    请扫支付宝二维码进行支付
+                  </h5>
+                  <MaterialButton
+                      color="none"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close">
+                  </MaterialButton>
+                </div>
+                <div class="modal-body">
+                  <img src="../../resources/pay.jpg" class="img-fluid shadow rounded-4">
+                </div>
+                <div class="modal-footer justify-content-between">
+                  <MaterialButton
+                      variant="gradient"
+                      color="dark"
+                      data-bs-dismiss="modal">
+                    取消支付
+                  </MaterialButton>
+                  <MaterialButton variant="gradient" color="success" class="mb-0 " @click="payButtonClick">
+                    我已付款
+                  </MaterialButton>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
