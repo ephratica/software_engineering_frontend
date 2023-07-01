@@ -124,8 +124,9 @@ import { ElNotification } from "element-plus";
         }
         this.paper_id=this.paper_id+1
         this.ans=this.paper[this.paper_id][1].answer
-        this.exam = this.answer_list[1].desc
+        this.exam = this.answer_list[this.answer_list.length-1].desc
         this.maxScore = this.answer_list[1].maxScore
+        this.exam = this.exam +"\n [Max Score:"+this.maxScore+"]"
         console.log("ans:",this.ans)
         console.log("maxScore:",this.maxScore)
         }
