@@ -52,29 +52,29 @@ import { ElNotification } from "element-plus";
     }},
     mounted () {
       this.searchParams = new URLSearchParams(window.location.search)
-      this.exam_id = this.searchParams.get("id")
-      axios.get('/api/sign_up/finished?id=1', {
+      this.exam_id = this.searchParams.get("exam_id")
+      axios.get('/api/sign_up/finished?id='+this.exam_id, {
       }).then(res => {
         let exams = res.data
         console.log("exams:",exams)
         for (let [i, exam] of exams.entries()) {
           console.log("userId",exam.userId)
-          axios.get(('/api/take_exam?uid=' + exam.userId + '&eid=1'), {
+          axios.get(('/api/take_exam?uid=' + exam.userId + '&eid='+this.exam_id), {
           }).then(res => {
             this.paper[i] = res.data
-            console.log(i,this.paper)
+            console.log(i,res.data)
           }).catch(err => {
             alert('出错了：' + err.code)
           })
         }
-        console.log(this.paper)
+        console.log(this.paper) //paper中存放所有参加本场考试的学生的试卷
       }).catch(err => {
       alert('出错了：' + err.code)
       })
-      axios.get(('/api/exam/content?id=1'), {
+      axios.get(('/api/exam/content?id='+this.exam_id), {
       }).then(res => {
         this.answer_list = res.data
-        console.log("exam:",this.answer_list[1])
+        console.log("exam:",this.answer_list[this.answer_list.length-1])
       }).catch(err => {
         alert('出错了：' + err.code)
       })
@@ -93,10 +93,10 @@ import { ElNotification } from "element-plus";
         else{
           if(this.paper_id!=-1){
           
-          console.log('userId:',this.paper[this.paper_id][1].userId,'questionId:',this.paper[this.paper_id][1].questionId,'score:',this.score)
+          console.log('userId:',this.paper[this.paper_id][1].userId,'questionId:',this.paper[this.paper_id][this.answer_list.length-1].questionId,'score:',this.score)
           axios.put('/api/grade', {
           userId: this.paper[this.paper_id][1].userId,
-          questionId: this.paper[this.paper_id][1].questionId,
+          questionId: this.paper[this.paper_id][this.answer_list.length-1].questionId,
           score:this.score,
 
         }).then(res => {
@@ -123,9 +123,9 @@ import { ElNotification } from "element-plus";
         }) 
         }
         this.paper_id=this.paper_id+1
-        this.ans=this.paper[this.paper_id][1].answer
+        this.ans=this.paper[this.paper_id][this.answer_list.length-1].answer
         this.exam = this.answer_list[this.answer_list.length-1].desc
-        this.maxScore = this.answer_list[1].maxScore
+        this.maxScore = this.answer_list[this.answer_list.length-1].maxScore
         this.exam = this.exam +"\n [Max Score:"+this.maxScore+"]"
         console.log("ans:",this.ans)
         console.log("maxScore:",this.maxScore)
