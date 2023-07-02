@@ -82,7 +82,7 @@ import CenteredFooter from "@/examples/footers/FooterCentered.vue";
 
 <script>
 import axios from "axios";
-
+import Cookies from 'js-cookie'
 export default {
   name: "stu-exams",
   components: {
@@ -97,7 +97,7 @@ export default {
   methods: {
     setQuestionRoute:function (exam){
       let route = ""
-      route = '/questions?id=' + this.id + '&examId=' + exam.examId
+      route = '/questions?examId=' + exam.examId
       return route
     },
     setQuestionLabel: function (i) {
@@ -112,8 +112,8 @@ export default {
     }
   },
   mounted () {
-    this.searchParams = new URLSearchParams(window.location.search)
-    this.id = this.searchParams.get("id")
+    this.id = Cookies.get('student_id')
+    console.log('id:', this.id)
     axios.get(('/api/sign_up/exam?id=' + this.id), {
     }).then(res => {
       let exams = res.data

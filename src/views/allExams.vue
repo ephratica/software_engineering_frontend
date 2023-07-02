@@ -66,7 +66,7 @@ import Header from "../examples/Header.vue";
 
 <script>
 import axios from "axios";
-
+import Cookies from 'js-cookie'
 export default {
   name: "stu-exams",
   components: {
@@ -79,12 +79,11 @@ export default {
     }
   },
   mounted () {
-    this.searchParams = new URLSearchParams(window.location.search)
-    this.id = this.searchParams.get("id")
+    this.id = Cookies.get('student_id')
+    console.log('id:', this.id)
     axios.get('/api/exam/all', {
     }).then(res => {
       this.exams = res.data
-      // console.log("fuck")
     }).catch(err => {
       alert('出错了：' + err.code)
     })
@@ -94,8 +93,7 @@ export default {
       let action = {}
       action.label = "报名考试"
       action.color = "white"
-      action.route = "/pay?id=" + this.id + "&examId=" + exam.id
-      console.log(exam.id)
+      action.route = "/pay?examId=" + exam.id
       return action
     }
   }

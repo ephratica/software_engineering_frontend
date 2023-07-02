@@ -94,7 +94,7 @@ import { ElNotification } from "element-plus";
 export default {
   data() {
     return {
-      number:0,
+      number: 0,
       type: '',
       question: '',
       optionA: '',
@@ -107,7 +107,7 @@ export default {
       exam: '',
       exams: [],
       isChoice: false,
-      desc:'',
+      desc: '',
     }
   },
   created() {
@@ -123,47 +123,47 @@ export default {
 
     submitForm() {
       console.log(this.type)
-      if(this.type==='选择题'){
+      if (this.type === '选择题') {
         this.isChoice = true
-        this.desc = this.question+':\nA:'+this.optionA+'\nB: '+this.optionB+'\nC: '+this.optionC+'\nD: '+this.optionD
+        this.desc = this.question + ':\nA:' + this.optionA + '\nB: ' + this.optionB + '\nC: ' + this.optionC + '\nD: ' + this.optionD
       }
-      else{
+      else {
         this.desc = this.question
       }
       const data = {
-        id:null,
+        id: null,
         examId: this.exam,
         number: this.number,
-        isChoice:this.isChoice,
-        desc:this.desc,
-        stdAnswer:this.answer,
-        maxScore:this.score
+        isChoice: this.isChoice,
+        desc: this.desc,
+        stdAnswer: this.answer,
+        maxScore: this.score
       }
-      console.log(this.exam,data)
-      
+      console.log(this.exam, data)
+
       axios.put('/api/question/add', data)
-      .then(response => {
-        if(response.data==='success'){
-          ElNotification({
-            title: '提交成功',
-            message: "试卷已刷新",
-            type: "success",
-            duration: 3000
-          })
-        }
-        else{
-          ElNotification({
-            title: '提交失败',
-            message: "请重新尝试",
-            type: "error",
-            duration: 3000
-          })
-        }
-      })
-      .catch(error => {
-        console.log(error)
-        // 可以在这里添加错误提示等
-      })
+        .then(response => {
+          if (response.data === 'success') {
+            ElNotification({
+              title: '提交成功',
+              message: "试卷已刷新",
+              type: "success",
+              duration: 3000
+            })
+          }
+          else {
+            ElNotification({
+              title: '提交失败',
+              message: "请重新尝试",
+              type: "error",
+              duration: 3000
+            })
+          }
+        })
+        .catch(error => {
+          console.log(error)
+          // 可以在这里添加错误提示等
+        })
     }
   }
 }

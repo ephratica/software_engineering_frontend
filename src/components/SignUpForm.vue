@@ -1,168 +1,157 @@
 <template>
-    <el-form
-        ref="ruleFormRef"
-        :model="ruleForm"
-        :rules="rules"
-    >
-      <el-form-item label="" prop="username">
-        <el-input placeholder="请输入用户名" autoComplete="on" style="position: relative" v-model="ruleForm.username">
-          <template #prefix>
-            <el-icon class="el-input__icon"><UserFilled /></el-icon>
-          </template>
-        </el-input>
-      </el-form-item>
-    
-      <el-form-item label="" prop="password">
-        <el-input
-            placeholder="请输入密码"
-            autoComplete="on"
-            v-model="ruleForm.password"
-            :type="passwordType"
-        >
-          <template #prefix>
-            <el-icon class="el-input__icon"><GoodsFilled /></el-icon>
-          </template>
-          <template #suffix>
-            <div class="show-pwd" @click="showPwd">
-              <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
-            </div>
-          </template>
-        </el-input>
-      </el-form-item>
+  <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules">
+    <el-form-item label="" prop="username">
+      <el-input placeholder="请输入用户名" autoComplete="on" style="position: relative" v-model="ruleForm.username">
+        <template #prefix>
+          <el-icon class="el-input__icon">
+            <UserFilled />
+          </el-icon>
+        </template>
+      </el-input>
+    </el-form-item>
 
-      <el-form-item label="" prop="password2">
-        <el-input
-            placeholder="请再次输入密码"
-            autoComplete="on"
-            v-model="ruleForm.password2"
-            :type="passwordType"
-        >
-          <template #prefix>
-            <el-icon class="el-input__icon"><GoodsFilled /></el-icon>
-          </template>
-          <template #suffix>
-            <div class="show-pwd" @click="showPwd">
-              <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
-            </div>
-          </template>
-        </el-input>
-      </el-form-item>
+    <el-form-item label="" prop="password">
+      <el-input placeholder="请输入密码" autoComplete="on" v-model="ruleForm.password" :type="passwordType">
+        <template #prefix>
+          <el-icon class="el-input__icon">
+            <GoodsFilled />
+          </el-icon>
+        </template>
+        <template #suffix>
+          <div class="show-pwd" @click="showPwd">
+            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+          </div>
+        </template>
+      </el-input>
+    </el-form-item>
+
+    <el-form-item label="" prop="password2">
+      <el-input placeholder="请再次输入密码" autoComplete="on" v-model="ruleForm.password2" :type="passwordType">
+        <template #prefix>
+          <el-icon class="el-input__icon">
+            <GoodsFilled />
+          </el-icon>
+        </template>
+        <template #suffix>
+          <div class="show-pwd" @click="showPwd">
+            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+          </div>
+        </template>
+      </el-input>
+    </el-form-item>
+
+    <el-form-item style="width: 100%">
+      <el-button :loading="loading" class="login-btn" type="success" @click="submitForm(ruleFormRef)">注册</el-button>
+    </el-form-item>
+  </el-form>
+</template>
     
-      <el-form-item style="width: 100%">
-        <el-button
-            :loading="loading"
-            class="login-btn"
-            type="success"
-            @click="submitForm(ruleFormRef)"
-        >注册</el-button
-        >
-      </el-form-item>
-    </el-form>
-    </template>
-    
-    <script setup lang="ts">
-    import { ref, reactive } from 'vue'
-    import type { FormInstance } from 'element-plus'
-    import { ElNotification } from "element-plus";
-    import { useRouter } from 'vue-router'
-    import { useUserStore } from '../stores/modules/user'
+<script setup lang="ts">
+import { ref, reactive } from 'vue'
+import type { FormInstance } from 'element-plus'
+import { ElNotification } from "element-plus";
+import { useRouter } from 'vue-router'
+import { useUserStore } from '../stores/modules/user'
 import axios from 'axios';
-    const router = useRouter()
-    const ruleFormRef = ref<FormInstance>()
-    const passwordType = ref('password')
-    const loading = ref(false)
-    const useStore = useUserStore()
-    const rules = reactive({
-      password: [{ required: true, message: "请输入密码", trigger: "blur" }],
-      password2: [{ required: true, message: "请再次输入密码", trigger: "blur" }],
-      username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-    })
-    // 表单数据
-    const ruleForm = reactive({
-      username: '',
-      password: '',
-      password2: '',
-    })
-    // 显示密码图标
-    const showPwd = () => {
-      passwordType.value = passwordType.value === 'password'?'':'password'
+const router = useRouter()
+const ruleFormRef = ref<FormInstance>()
+const passwordType = ref('password')
+const loading = ref(false)
+const useStore = useUserStore()
+const rules = reactive({
+  password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+  password2: [{ required: true, message: "请再次输入密码", trigger: "blur" }],
+  username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+})
+// 表单数据
+const ruleForm = reactive({
+  username: '',
+  password: '',
+  password2: '',
+})
+// 显示密码图标
+const showPwd = () => {
+  passwordType.value = passwordType.value === 'password' ? '' : 'password'
+}
+
+// const userStore = useUserStore()
+const submitForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.validate(async (valid) => {
+    if (valid) {
+      loading.value = true
+      // 登录
+      if (ruleForm.password === ruleForm.password2) {
+        axios.post('/api/user/register', {
+          name: ruleForm.username,
+          password: ruleForm.password,
+          type: 'student'
+        }).then(res => {
+          console.log(res.data)
+          if (res.data === 1) {
+            ElNotification({
+              title: '注册成功',
+              message: "正在跳转至 CET登陆界面",
+              type: "success",
+              duration: 3000
+            })
+            router.push({
+              path: '/TheWelcome',
+            })
+          }
+          if (res.data === -1) {
+            ElNotification({
+              title: '注册失败',
+              message: "用户已存在",
+              type: "error",
+              duration: 3000
+            })
+          }
+        }).catch(err => {
+          // alert('出错了：' + err.code)
+          alert("支付失败！请勿重复报名！")
+        })
+      }
+      else {
+        await router.push({
+          path: '/SignUp',
+        })
+        ElNotification({
+          title: '注册失败',
+          message: "两次密码输入不一致",
+          type: "error",
+          duration: 3000
+        })
+        loading.value = false
+        return false
+      }
     }
+    else {
+      console.log('error submit!')
+      loading.value = false
+      return false
+    }
+  })
+}
+</script>
     
-    // const userStore = useUserStore()
-    const submitForm = (formEl: FormInstance | undefined) => {
-      if (!formEl) return
-      formEl.validate(async(valid) => {
-        if (valid) {
-            loading.value = true
-          // 登录
-            if(ruleForm.password===ruleForm.password2){
-              axios.post('/api/user/register', {
-              name: ruleForm.username,
-              password: ruleForm.password,
-              type:'student'
-            }).then(res => {
-              console.log(res.data)
-              if(res.data===1){
-                ElNotification({
-                title: '注册成功',
-                message: "正在跳转至 CET登陆界面",
-                type: "success",
-                duration: 3000
-                })
-                router.push({
-                path: '/TheWelcome',
-              })
-              }
-              if(res.data===-1){
-                ElNotification({
-                title: '注册失败',
-                message: "用户已存在",
-                type: "error",
-                duration: 3000
-                })
-              }
-            }).catch(err => {
-              // alert('出错了：' + err.code)
-              alert("支付失败！请勿重复报名！")
-            })          
-            }
-            else{
-              await router.push({
-                path: '/SignUp',
-              })
-              ElNotification({
-                title: '注册失败',
-                message: "两次密码输入不一致",
-                type: "error",
-                duration: 3000
-              })
-              loading.value = false
-              return false 
-            }
-        } 
-        else {
-          console.log('error submit!')
-          loading.value = false
-          return false
-        }
-      })
-    }
-    </script>
-    
-    <style scoped>
-    .login-btn{
-      margin-top: 20px;
-      width: 100%; height: 47px
-    }
-    .show-pwd {
-      position: absolute;
-      right: 10px;
-      top: 7px;
-      font-size: 16px;
-      cursor: pointer;
-      user-select: none;
-    }
-    ::v-deep(.svg-icon){
-      vertical-align: 0;
-    }
-    </style>
+<style scoped>
+.login-btn {
+  margin-top: 20px;
+  width: 100%;
+  height: 47px
+}
+
+.show-pwd {
+  position: absolute;
+  right: 10px;
+  top: 7px;
+  font-size: 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+::v-deep(.svg-icon) {
+  vertical-align: 0;
+}
+</style>

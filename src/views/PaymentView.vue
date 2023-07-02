@@ -72,7 +72,7 @@ import MaterialButton from "@/components/MaterialButton.vue";
 
 <script>
 import axios from "axios";
-
+import Cookies from 'js-cookie'
 export default {
   name: "stu-exams",
   components: {
@@ -85,9 +85,9 @@ export default {
   },
   mounted () {
     this.searchParams = new URLSearchParams(window.location.search)
-    this.id = this.searchParams.get("id")
     this.examId = this.searchParams.get("examId")
-
+    this.id = Cookies.get('student_id')
+    console.log('exam_id:',this.examId)
     axios.get('/api/pay?examId=' + this.examId).then(res => {
       this.examToPay = res.data
     }).catch(err => {
@@ -102,7 +102,7 @@ export default {
         examId: this.examId,
       }).then(res => {
         this.sign_up_result = res.data
-        let target = this.sign_up_result ? ('/StudentHome?id=' + this.id) : '#'
+        let target = this.sign_up_result ? ('/StudentHome') : '#'
         window.location.replace(target)
         // console.log(this.sign_up_result)
       }).catch(err => {

@@ -17,6 +17,7 @@
     "bootstrap-icons": "^1.10.5",
     "element-plus": "^2.3.6",
     "esbuild": "0.17.19",
+    "js-cookie": "^3.0.5",
     "pinia": "^2.0.36",
     "sass": "^1.62.1",
     "typed.js": "2.0.12",

@@ -15,7 +15,7 @@
         </div>
         <!--标题和logo end-->
         <!--登录表单组件 start-->
-         <LoginForm/>
+        <LoginForm />
         <!--登录表单组件 end-->
       </div>
       <!--登录表单 end-->
@@ -23,75 +23,77 @@
   </div>
 </template>
   
-  <script setup lang="ts">
-  import LoginForm from './SignUpForm.vue'
-  </script>
+<script setup lang="ts">
+import LoginForm from './SignUpForm.vue'
+</script>
   
-  <style scoped>
-  body{
-	  margin:0;
-	  padding:0;
-	  border:0
-  }
-  .login-container {
-    background-color: #ffffff;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    display: flex;
-    background-image: url("../assets/login_bg.svg");
-    justify-content: center;
-    align-items: center;
-    padding: 25px 25px;
-    box-sizing: border-box;
-  }
-  .login-box {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background-color: #fffc;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .login-left{
-    width: 50%;
-  }
-  .login-left img{
-    width: 100%;
-    max-width: 900px;
-  }
-  
-  .login-form{
-    max-width: 480px;
-    width: 50%;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
-    box-sizing: border-box;
-  }
-  
-  .login-title{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin-bottom: 30px;
-  }
-  
-  .login-title .title{
-    margin: 0;
-    font-size: 30px;
-    white-space: nowrap;
-  }
-  .login-title .icon{
-    width: 60px;
-    height: 60px;
-  }
-  
-  ::v-deep(.el-input__inner){
-    height: 40px;
-  }
-  
-  </style>
+<style scoped>
+body {
+  margin: 0;
+  padding: 0;
+  border: 0
+}
+
+.login-container {
+  background-color: #ffffff;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  background-image: url("../assets/login_bg.svg");
+  justify-content: center;
+  align-items: center;
+  padding: 25px 25px;
+  box-sizing: border-box;
+}
+
+.login-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #fffc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-left {
+  width: 50%;
+}
+
+.login-left img {
+  width: 100%;
+  max-width: 900px;
+}
+
+.login-form {
+  max-width: 480px;
+  width: 50%;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+  box-sizing: border-box;
+}
+
+.login-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}
+
+.login-title .title {
+  margin: 0;
+  font-size: 30px;
+  white-space: nowrap;
+}
+
+.login-title .icon {
+  width: 60px;
+  height: 60px;
+}
+
+::v-deep(.el-input__inner) {
+  height: 40px;
+}</style>
