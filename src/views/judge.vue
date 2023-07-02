@@ -36,9 +36,13 @@
   
 <script>
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router'
 import axios from "axios";
 import { ElNotification } from "element-plus";
 export default {
+  setup(){
+    const router = useRouter()
+  },
   data: function () {
     return {
       maxScore: 100,
@@ -70,9 +74,7 @@ export default {
           type: "success",
           duration: 3000
         })
-        router.push({
-          path: '/StudentHome',
-        })
+        this.$router.push('/TeacherHome')
       }
       if (this.score < 0 || this.score > this.maxScore) {
         ElNotification({
